@@ -1,0 +1,33 @@
+{
+  "name": "langgraph-agent-template",
+  "version": "1.0.0",
+  "description": "Complete LangGraph AI Agent Template with Backend and Frontend",
+  "scripts": {
+    "setup": "./setup.sh",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "langgraph",
+    "ai",
+    "agent",
+    "react",
+    "typescript",
+    "tailwind",
+    "express"
+  ],
+  "author": "LangGraph Template",
+  "license": "MIT"
+} 
