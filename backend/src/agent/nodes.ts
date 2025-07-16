@@ -36,7 +36,7 @@ async function chatNode(state: AgentState): Promise<Partial<AgentState>> {
   return {
     currentMessage: response.content as string,
     toolCalls: response.tool_calls?.map(toolCall => ({
-      id: toolCall.id,
+      id: toolCall.id || `tool-${Date.now()}-${Math.random()}`,
       name: toolCall.name,
       args: toolCall.args,
     })) || [],
@@ -125,9 +125,9 @@ export function createAgentGraph() {
   workflow.addNode("final_response", finalResponseNode);
 
   // Add edges
-  workflow.addEdge("chat", "tools");
+  workflow.addEdge("chat" as any, "tools" as any);
   workflow.addConditionalEdges(
-    "tools",
+    "tools" as any,
     (state) => {
       if (state.toolCalls && state.toolCalls.length > 0) {
         return "final_response";
@@ -135,10 +135,10 @@ export function createAgentGraph() {
       return END;
     }
   );
-  workflow.addEdge("final_response", END);
+  workflow.addEdge("final_response" as any, END);
 
   // Set entry point
-  workflow.setEntryPoint("chat");
+  workflow.setEntryPoint("chat" as any);
 
   return workflow.compile();
 } 
