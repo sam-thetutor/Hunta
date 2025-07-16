@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticateToken, AuthenticatedRequest } from '../middleware/auth.js';
 import { createAgentGraph } from '../agent/graph.js';
 import { ChatRequest, ChatResponse, ChatMessage } from '../types.js';
 
@@ -7,7 +8,7 @@ const router = Router();
 // Initialize the agent graph
 const agentGraph = createAgentGraph();
 
-router.post('/chat', async (req, res) => {
+router.post('/chat', authenticateToken, async (req: AuthenticatedRequest, res) => {
   try {
     const { message, history = [] }: ChatRequest = req.body;
 
@@ -26,11 +27,22 @@ router.post('/chat', async (req, res) => {
       }
     ];
 
+    // Add user context to the message for swap tools
+    const userContext = `User ID: ${req.user?.id}, User Public Key: ${req.user?.publicKey}`;
+    const messageWithContext = `${message}\n\nUser Context: ${userContext}`;
+
     // Run the agent
     const result = await agentGraph.invoke({
-      messages,
+      messages: [
+        ...messages.slice(0, -1),
+        {
+          ...messages[messages.length - 1],
+          content: messageWithContext
+        }
+      ],
       currentMessage: '',
       toolCalls: [],
+      userId: req.user?.id, // Pass user ID for swap tools
     });
 
     // Create response

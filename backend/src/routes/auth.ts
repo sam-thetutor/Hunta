@@ -5,10 +5,15 @@ import User from '../models/User.js';
 import ManagedWallet from '../models/ManagedWallet.js';
 import Session from '../models/Session.js';
 import { generateWallet, encryptSecretKey, fundTestWallet } from '../utils/stellar.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'your-encryption-key';
+const JWT_SECRET = process.env.JWT_SECRET || '12389389';
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || '12389389';
+
+console.log("JWT_SECRET", JWT_SECRET);
+console.log("ENCRYPTION_KEY", ENCRYPTION_KEY);
 
 // Connect wallet and create session
 router.post('/connect-wallet', async (req: Request, res: Response) => {
@@ -123,11 +128,12 @@ router.get('/profile', async (req: Request, res: Response) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1];
 
+
     if (!token) {
       return res.status(401).json({ error: 'Access token required' });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { sessionToken: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as unknown as { sessionToken: string };
     
     const session = await Session.findOne({ 
       sessionToken: decoded.sessionToken,
@@ -173,7 +179,7 @@ router.post('/logout', async (req: Request, res: Response) => {
       return res.status(401).json({ error: 'Access token required' });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { sessionToken: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as unknown as { sessionToken: string };
     
     await Session.deleteOne({ sessionToken: decoded.sessionToken });
 
@@ -181,6 +187,56 @@ router.post('/logout', async (req: Request, res: Response) => {
 
   } catch (error) {
     console.error('Error logging out:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Debug endpoint to check token validity
+router.get('/debug-token', async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).json({ error: 'No token provided' });
+    }
+
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as unknown as { sessionToken: string };
+      
+      const session = await Session.findOne({ 
+        sessionToken: decoded.sessionToken,
+        expiresAt: { $gt: new Date() }
+      });
+
+      if (!session) {
+        return res.status(401).json({ 
+          error: 'Session not found or expired',
+          decoded: decoded,
+          sessionExists: false
+        });
+      }
+
+      res.json({
+        valid: true,
+        decoded: decoded,
+        session: {
+          id: session._id,
+          userId: session.userId,
+          expiresAt: session.expiresAt,
+          createdAt: session.createdAt
+        }
+      });
+
+    } catch (jwtError) {
+      res.status(401).json({ 
+        error: 'Invalid JWT token',
+        jwtError: jwtError instanceof Error ? jwtError.message : 'Unknown JWT error'
+      });
+    }
+
+  } catch (error) {
+    console.error('Error in debug endpoint:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

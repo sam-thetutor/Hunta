@@ -33,6 +33,7 @@ export interface AuthContextType {
   sessionToken: string | null;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
+  forceReset: () => void;
   isLoading: boolean;
   isInitializing: boolean;
   error: string | null;
@@ -116,18 +117,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             
             console.log('Session restored successfully');
           } else {
-            // Session invalid, clear storage
-            console.log('Session invalid, clearing storage');
+            // Session invalid, clear storage immediately
+            console.log('Session invalid (status:', response.status, '), clearing storage');
             localStorage.removeItem('hunta_user');
             localStorage.removeItem('hunta_managed_wallet');
             localStorage.removeItem('hunta_session_token');
+            
+            // Reset state
+            setUser(null);
+            setManagedWallet(null);
+            setSessionToken(null);
           }
         } catch (err) {
           console.error('Failed to verify session:', err);
+          // Clear storage on any error
           localStorage.removeItem('hunta_user');
           localStorage.removeItem('hunta_managed_wallet');
           localStorage.removeItem('hunta_session_token');
+          
+          // Reset state
+          setUser(null);
+          setManagedWallet(null);
+          setSessionToken(null);
         }
+      } else {
+        // No saved session, ensure clean state
+        console.log('No saved session found');
+        localStorage.removeItem('hunta_user');
+        localStorage.removeItem('hunta_managed_wallet');
+        localStorage.removeItem('hunta_session_token');
+        
+        setUser(null);
+        setManagedWallet(null);
+        setSessionToken(null);
       }
       
       // Always set initializing to false after checking session
@@ -247,12 +269,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const forceReset = () => {
+    console.log('Force resetting all session data');
+    setUser(null);
+    setManagedWallet(null);
+    setSessionToken(null);
+    localStorage.removeItem('hunta_user');
+    localStorage.removeItem('hunta_managed_wallet');
+    localStorage.removeItem('hunta_session_token');
+    
+    // Disconnect from Stellar Kit
+    if (stellarKit) {
+      stellarKit.disconnect();
+    }
+  };
+
   const value: AuthContextType = {
     user,
     managedWallet,
     sessionToken,
     connectWallet,
     disconnectWallet,
+    forceReset,
     isLoading,
     isInitializing,
     error,

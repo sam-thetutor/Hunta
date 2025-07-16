@@ -1,5 +1,16 @@
-import { Tool } from "@langchain/core/tools";
-import { z } from "zod";
+import { Tool } from '@langchain/core/tools';
+import {
+  GetTokensTool,
+  GetProtocolsTool,
+  GetPoolsTool,
+  GetContractAddressesTool,
+  GetQuoteTool,
+  ExecuteSwapTool,
+  SendTransactionTool,
+  GetSwapStatusTool,
+  GetSwapHistoryTool,
+  GetTokenPriceTool
+} from './tools/soroswap.js';
 
 export class CalculatorTool extends Tool {
   name = "calculator";
@@ -81,4 +92,31 @@ export class WeatherTool extends Tool {
   }
 }
 
-export const tools = [new CalculatorTool(), new WeatherTool()]; 
+// Registry of all available tools
+export const tools: Tool[] = [
+  // Soroswap tools
+  new GetTokensTool(),
+  new GetProtocolsTool(),
+  new GetPoolsTool(),
+  new GetContractAddressesTool(),
+  new GetQuoteTool(),
+  new ExecuteSwapTool(),
+  new SendTransactionTool(),
+  new GetSwapStatusTool(),
+  new GetSwapHistoryTool(),
+  new GetTokenPriceTool(),
+];
+
+// Export individual tools for specific use cases
+export {
+  GetTokensTool,
+  GetProtocolsTool,
+  GetPoolsTool,
+  GetContractAddressesTool,
+  GetQuoteTool,
+  ExecuteSwapTool,
+  SendTransactionTool,
+  GetSwapStatusTool,
+  GetSwapHistoryTool,
+  GetTokenPriceTool
+}; 

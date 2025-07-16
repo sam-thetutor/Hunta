@@ -1,16 +1,11 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://smartskillsweb3:2YkfFKjeHpPyfuVF@schedule.j6xcq.mongodb.net/?retryWrites=true&w=majority&appName=schedule';
-
-export const connectDB = async (): Promise<void> => {
+const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI as string);
     console.log('MongoDB connected successfully');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
     process.exit(1);
   }
 };

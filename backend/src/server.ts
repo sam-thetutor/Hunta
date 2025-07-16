@@ -5,6 +5,7 @@ import connectDB from './config/database.js';
 import chatRouter from './routes/chat.js';
 import authRouter from './routes/auth.js';
 import walletRouter from './routes/wallet.js';
+import swapRouter from './routes/swap.js';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api/chat', chatRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/wallet', walletRouter);
+app.use('/api/swap', swapRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

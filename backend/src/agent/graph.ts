@@ -61,7 +61,7 @@ async function toolNode(state: AgentState): Promise<Partial<AgentState>> {
           ? toolCall.args 
           : JSON.stringify(toolCall.args);
         
-        const result = await tool._call(argsString);
+        const result = await tool.invoke(argsString);
         toolResults.push({
           ...toolCall,
           result: result,
@@ -113,6 +113,7 @@ export function createAgentGraph() {
   workflow.addNode("tools", toolNode);
 
   // Add edges
+  workflow.addEdge("__start__", "chat");
   workflow.addEdge("chat", "tools");
   workflow.addConditionalEdges(
     "tools",
@@ -123,9 +124,6 @@ export function createAgentGraph() {
       return END;
     }
   );
-
-  // Set entry point
-  workflow.setEntryPoint("chat");
 
   return workflow.compile();
 } 

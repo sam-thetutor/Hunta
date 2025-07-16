@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import Session from '../models/Session.js';
 import User from '../models/User.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || '12389389';
 
 export interface AuthenticatedRequest extends Request {
   user?: {
@@ -26,7 +26,7 @@ export const authenticateToken = async (
       return;
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { sessionToken: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as unknown as { sessionToken: string };
     
     // Verify session exists and is not expired
     const session = await Session.findOne({ 
