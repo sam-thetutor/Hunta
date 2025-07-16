@@ -10,9 +10,15 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@creit.tech/stellar-wallets-kit": "^1.7.6",
+    "@types/react-router-dom": "^5.3.3",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "lucide-react": "^0.344.0"
+    "react-router-dom": "^7.6.3",
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.5",
@@ -29,4 +35,4 @@
     "typescript": "^5.5.3",
     "vite": "^5.4.2"
   }
-} 
+}

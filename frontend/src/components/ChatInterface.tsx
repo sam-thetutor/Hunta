@@ -1,12 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Trash2, Bot } from 'lucide-react';
+import { Send, Trash2, Bot, User, Wallet, LogOut } from 'lucide-react';
 import { Message } from './Message';
 import { useChat } from '../hooks/useChat';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const ChatInterface: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const { messages, isLoading, error, sendMessage, clearChat } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { user, disconnectWallet } = useAuth();
+  const navigate = useNavigate();
+
+  // Redirect to home if not authenticated
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -32,8 +43,8 @@ export const ChatInterface: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header */}
+    <div className="flex flex-col h-screen bg-gray-50 pt-16">
+      {/* Chat Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -41,7 +52,7 @@ export const ChatInterface: React.FC = () => {
               <Bot className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-gray-900">LangGraph AI Agent</h1>
+              <h1 className="text-xl font-semibold text-gray-900">AI Assistant</h1>
               <p className="text-sm text-gray-500">Powered by LangGraph and OpenAI</p>
             </div>
           </div>

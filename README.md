@@ -1,261 +1,429 @@
-# LangGraph AI Agent Template
+# 🎯 Hunta - AI-Powered DeFi Liquidity Hunter & Portfolio Balancer
 
-A complete template for building AI agents with LangGraph, featuring both backend and frontend components.
+> **Hunt for optimal DeFi opportunities and automatically balance portfolios across Stellar's ecosystem**
 
-## 🚀 Features
+[![Stellar](https://img.shields.io/badge/Stellar-Network-orange)](https://stellar.org/)
+[![Soroswap](https://img.shields.io/badge/Soroswap-Integration-blue)](https://soroswap.finance/)
+[![DeFindex](https://img.shields.io/badge/DeFindex-Integration-green)](https://defindex.com/)
+[![AI Agent](https://img.shields.io/badge/AI-Agent-purple)](https://langchain.com/)
 
-- **LangGraph Backend**: Express server with LangGraph AI agent
-- **React Frontend**: Modern chat interface with TypeScript and Tailwind CSS
-- **Tool Integration**: Built-in calculator tool as an example
-- **Real-time Chat**: Message history and typing indicators
-- **Type Safety**: Full TypeScript support
-- **Responsive Design**: Works on desktop and mobile
+## 📋 Table of Contents
 
-## 📁 Project Structure
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Solution](#solution)
+- [Features](#features)
+- [Technical Architecture](#technical-architecture)
+- [Integration with Soroswap & DeFindex](#integration-with-soroswap--defindex)
+- [User Experience](#user-experience)
+- [Security & Safety](#security--safety)
+- [Getting Started](#getting-started)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
+
+## 🎯 Overview
+
+**Hunta** is an intelligent AI agent that revolutionizes DeFi portfolio management on the Stellar network. By leveraging the power of **Soroswap** (decentralized exchange and aggregator) and **DeFindex** (yield strategies as a service), Hunta provides users with both research capabilities and automated execution of DeFi strategies.
+
+### Core Value Proposition
+
+- **🔍 Intelligent Research**: AI-powered analysis of liquidity pools, yield opportunities, and market inefficiencies
+- **⚡ Automated Execution**: Smart contract interactions for portfolio rebalancing and strategy deployment
+- **🛡️ Risk Management**: Built-in safety mechanisms and user control over all automated actions
+- **📊 Real-time Analytics**: Live portfolio tracking and performance monitoring
+
+## 🚨 Problem Statement
+
+### Current DeFi Challenges on Stellar
+
+1. **Liquidity Fragmentation**: Users struggle to find the best prices across multiple DEXs and pools
+2. **Manual Portfolio Management**: Time-consuming and error-prone manual rebalancing
+3. **Yield Strategy Complexity**: Difficult to identify and deploy optimal yield strategies
+4. **Market Inefficiencies**: Missed arbitrage opportunities due to lack of real-time analysis
+5. **Risk Assessment**: Limited tools for evaluating DeFi strategy risks
+
+### User Pain Points
+
+- **Time Investment**: Hours spent monitoring markets and manually executing trades
+- **Opportunity Cost**: Missing optimal entry/exit points due to human limitations
+- **Knowledge Gap**: Complex DeFi strategies require deep technical understanding
+- **Security Concerns**: Manual interactions increase risk of errors and exploits
+
+## 💡 Solution
+
+**Hunta** addresses these challenges through a dual-mode AI agent:
+
+### 🔍 Research Assistant Mode
+- **Liquidity Analysis**: Real-time scanning of Soroswap pools for optimal trading opportunities
+- **Yield Hunting**: Analysis of DeFindex strategies for best risk-adjusted returns
+- **Arbitrage Detection**: Automated identification of price differences across Stellar DEXs
+- **Portfolio Analytics**: Comprehensive analysis of current portfolio health and optimization opportunities
+- **Market Intelligence**: AI-powered insights into market trends and predictions
+
+### ⚡ Execution Engine Mode
+- **Automated Rebalancing**: Smart portfolio rebalancing based on user-defined targets
+- **Strategy Deployment**: One-click deployment into optimal DeFindex yield strategies
+- **Arbitrage Execution**: Automated execution of identified arbitrage opportunities
+- **Smart Swapping**: Intelligent routing through Soroswap aggregator for best execution
+
+## ✨ Features
+
+### Core Capabilities
+
+| Feature | Description | Mode |
+|---------|-------------|------|
+| **Liquidity Hunting** | Find best liquidity pools and trading opportunities | Research |
+| **Portfolio Analysis** | Comprehensive portfolio health scoring and recommendations | Research |
+| **Yield Optimization** | Identify optimal DeFindex strategies for user's risk profile | Research |
+| **Arbitrage Detection** | Real-time scanning for price inefficiencies across DEXs | Research |
+| **Automated Rebalancing** | Execute portfolio rebalancing based on AI recommendations | Execution |
+| **Strategy Deployment** | Deploy funds into optimal yield strategies | Execution |
+| **Smart Routing** | Use Soroswap aggregator for optimal trade execution | Execution |
+| **Risk Assessment** | AI-powered risk evaluation for all strategies | Both |
+
+### Advanced Features
+
+- **🧠 Machine Learning**: Pattern recognition and predictive analytics
+- **📱 Mobile-First Design**: Responsive interface for on-the-go management
+- **🔔 Real-time Alerts**: Notifications for opportunities and portfolio changes
+- **📊 Performance Tracking**: Historical analysis and performance metrics
+- **🛡️ Safety Controls**: User-defined limits and emergency stop functionality
+
+## 🏗️ Technical Architecture
+
+### System Overview
 
 ```
-langgraph-template/
-├── backend/                 # LangGraph AI Agent Server
-│   ├── src/
-│   │   ├── agent/          # LangGraph agent implementation
-│   │   ├── routes/         # Express routes
-│   │   ├── types.ts        # TypeScript types
-│   │   └── server.ts       # Express server
-│   ├── package.json
-│   └── tsconfig.json
-├── frontend/               # React Chat Interface
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── types/          # TypeScript types
-│   │   ├── App.tsx
-│   │   └── main.tsx
-│   ├── package.json
-│   └── tailwind.config.js
-└── README.md
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend       │    │   Blockchain    │
+│   (React/TS)    │◄──►│   (Node.js)     │◄──►│   (Stellar)     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   AI Agent      │    │   Soroswap      │    │   DeFindex      │
+│   (LangGraph)   │    │   Integration   │    │   Integration   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🛠️ Setup Instructions
+### Technology Stack
+
+#### Frontend
+- **React 18** with TypeScript
+- **Tailwind CSS** for styling
+- **React Router** for navigation
+- **Lucide React** for icons
+- **Vite** for build tooling
+
+#### Backend
+- **Node.js** with Express
+- **TypeScript** for type safety
+- **LangGraph** for AI agent orchestration
+- **OpenAI GPT-4** for natural language processing
+- **Stellar SDK** for blockchain interactions
+
+#### AI/ML
+- **LangChain** for LLM integration
+- **Custom Tools** for DeFi-specific operations
+- **State Management** for agent workflow
+- **Pattern Recognition** for market analysis
+
+#### Blockchain Integration
+- **Stellar Network** for transactions
+- **Soroswap API** for liquidity data and swaps
+- **DeFindex API** for yield strategies
+- **Web3.js** for smart contract interactions
+
+## 🔗 Integration with Soroswap & DeFindex
+
+### Soroswap Integration
+
+**Hunta** leverages Soroswap's three core components:
+
+#### 1. Soroswap AMM
+- **Liquidity Pool Analysis**: Real-time data on pool depths and APY
+- **Swap Execution**: Direct integration for token swaps
+- **Liquidity Provision**: Automated LP position management
+
+#### 2. Soroswap Aggregator
+- **Route Optimization**: Find best execution paths across multiple pools
+- **Split Trades**: Intelligent trade splitting for better execution
+- **Price Impact Analysis**: Minimize slippage through smart routing
+
+#### 3. Soroswap Swap Route API
+- **Real-time Pricing**: Live price feeds from all connected pools
+- **Opportunity Detection**: Identify arbitrage and optimization opportunities
+- **Execution Planning**: Pre-trade analysis and simulation
+
+### DeFindex Integration
+
+**Hunta** utilizes DeFindex's yield strategy infrastructure:
+
+#### 1. Strategy Analysis
+- **Performance Metrics**: Historical and current APY data
+- **Risk Assessment**: Strategy-specific risk evaluation
+- **Compatibility Check**: Match strategies to user's asset portfolio
+
+#### 2. Vault Management
+- **Automated Deployment**: One-click strategy deployment
+- **Portfolio Tracking**: Real-time vault performance monitoring
+- **Rebalancing**: Automated strategy reallocation
+
+#### 3. Yield Optimization
+- **Strategy Comparison**: Side-by-side analysis of available strategies
+- **Risk-Adjusted Returns**: Sharpe ratio and other risk metrics
+- **Diversification**: Multi-strategy portfolio construction
+
+## 👤 User Experience
+
+### User Journey
+
+#### 1. **Onboarding**
+```
+Welcome to Hunta! 
+→ Connect Stellar Wallet
+→ Set Risk Profile (Conservative/Moderate/Aggressive)
+→ Define Portfolio Goals
+→ Set Safety Limits
+```
+
+#### 2. **Research Phase**
+```
+User: "Hunta, find me the best yield opportunities for my XLM"
+Hunta: "I found 3 optimal strategies:
+       1. DeFindex Stable Yield Vault (8.5% APY, Low Risk)
+       2. Soroswap XLM/USDC LP (12.3% APY, Medium Risk)
+       3. Arbitrage Opportunity (15.2% APY, High Risk)"
+```
+
+#### 3. **Analysis Phase**
+```
+Hunta: "Here's my analysis:
+       - Current portfolio: 70% XLM, 30% USDC
+       - Recommended: 50% XLM, 30% USDC, 20% Yield Strategies
+       - Expected improvement: +3.2% annual return
+       - Risk assessment: Moderate (within your profile)"
+```
+
+#### 4. **Execution Phase**
+```
+Hunta: "Ready to execute? I'll:
+       1. Swap 200 XLM → USDC via Soroswap (best route)
+       2. Deploy 1000 XLM into DeFindex Stable Yield
+       3. Provide 500 XLM/USDC liquidity to Soroswap
+       
+       Total gas fees: 0.01 XLM
+       Estimated execution time: 2 minutes"
+```
+
+### Interface Design
+
+#### **Dashboard View**
+- **Portfolio Overview**: Current allocation and performance
+- **Opportunity Feed**: Real-time recommendations
+- **Performance Charts**: Historical and projected returns
+- **Risk Metrics**: Portfolio health indicators
+
+#### **Chat Interface**
+- **Natural Language**: "Hunta, optimize my portfolio"
+- **Context Awareness**: Remembers user preferences and history
+- **Interactive Responses**: Click-to-execute recommendations
+- **Educational Content**: Explains complex DeFi concepts
+
+## 🛡️ Security & Safety
+
+### Multi-Layer Security
+
+#### 1. **User Control**
+- **Approval Required**: All automated actions require user confirmation
+- **Simulation Mode**: "Show me what would happen" before execution
+- **Emergency Stop**: Instant pause of all automated activities
+- **Transaction Limits**: User-defined maximum trade sizes
+
+#### 2. **Smart Contract Security**
+- **Audited Protocols**: Only interact with audited Soroswap and DeFindex contracts
+- **Slippage Protection**: Maximum acceptable slippage limits
+- **MEV Protection**: Sandwich attack prevention
+- **Gas Optimization**: Efficient transaction batching
+
+#### 3. **AI Safety**
+- **Validation Checks**: Multiple verification steps before execution
+- **Risk Scoring**: AI-powered risk assessment for all actions
+- **Fallback Mechanisms**: Human override capabilities
+- **Audit Trails**: Complete transaction history and reasoning
+
+### Privacy & Data Protection
+
+- **Local Processing**: Sensitive data processed locally when possible
+- **Encrypted Storage**: All user data encrypted at rest
+- **No Data Selling**: User data never sold to third parties
+- **GDPR Compliance**: Full compliance with data protection regulations
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ 
-- npm or pnpm
-- OpenAI API key (or Anthropic API key)
+- npm or yarn
+- Stellar wallet (Freighter, Albedo, etc.)
+- OpenAI API key
 
-### Backend Setup
+### Installation
 
-1. **Navigate to backend directory:**
-   ```bash
-   cd langgraph-template/backend
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/your-username/hunta.git
+cd hunta
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   pnpm install
-   ```
+# Install dependencies
+npm install
 
-3. **Set up environment variables:**
-   ```bash
-   cp env.example .env
-   ```
-   
-   Edit `.env` and add your API keys:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key_here
-   # or
-   ANTHROPIC_API_KEY=your_anthropic_api_key_here
-   PORT=3001
-   FRONTEND_URL=http://localhost:5173
-   ```
+# Set up environment variables
+cp backend/env.example backend/.env
+# Edit backend/.env with your configuration
 
-4. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+# Start development servers
+npm run dev
+```
 
-   The backend will be available at `http://localhost:3001`
+### Environment Variables
 
-### Frontend Setup
+```bash
+# Backend (.env)
+OPENAI_API_KEY=your_openai_api_key
+SOROSWAP_API_KEY=your_soroswap_api_key
+DEFINDEX_API_KEY=your_defindex_api_key
+STELLAR_NETWORK=testnet  # or public
+FRONTEND_URL=http://localhost:5173
 
-1. **Navigate to frontend directory:**
-   ```bash
-   cd langgraph-template/frontend
-   ```
+# Frontend (vite.config.ts)
+VITE_BACKEND_URL=http://localhost:3001
+VITE_STELLAR_NETWORK=testnet
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   # or
-   pnpm install
-   ```
+### Quick Start Guide
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+1. **Connect Wallet**: Use your Stellar wallet to connect to Hunta
+2. **Set Preferences**: Define your risk tolerance and investment goals
+3. **Explore Features**: Try the research assistant mode first
+4. **Start Small**: Begin with small amounts in execution mode
+5. **Monitor Performance**: Track your portfolio's performance over time
 
-   The frontend will be available at `http://localhost:5173`
+## 📚 API Documentation
 
-## 🎯 Usage
+### Hunta AI Agent API
 
-1. Open your browser and go to `http://localhost:5173`
-2. Start chatting with the AI agent
-3. Try asking for calculations like:
-   - "What is 15 * 23?"
-   - "Calculate 100 / 4 + 7"
-   - "What is 2^10?"
+#### Chat Endpoint
+```http
+POST /api/chat
+Content-Type: application/json
 
-## 🔧 Customization
+{
+  "message": "Find me the best yield opportunities for XLM",
+  "history": [...]
+}
+```
 
-### Adding New Tools
+#### Portfolio Analysis
+```http
+GET /api/portfolio/analysis
+Authorization: Bearer <wallet_signature>
+```
 
-1. **Create a new tool in `backend/src/agent/tools.ts`:**
-   ```typescript
-   export class MyCustomTool extends Tool {
-     name = "my_tool";
-     description = "Description of what this tool does";
-     schema = z.object({
-       // Define your tool's input schema
-     });
+#### Strategy Execution
+```http
+POST /api/execute/strategy
+Authorization: Bearer <wallet_signature>
 
-     async _call(input: any): Promise<string> {
-       // Implement your tool logic
-       return "Tool result";
-     }
-   }
-   ```
+{
+  "strategy": "rebalance",
+  "targets": {
+    "XLM": 0.5,
+    "USDC": 0.3,
+    "YIELD": 0.2
+  }
+}
+```
 
-2. **Add the tool to the tools array:**
-   ```typescript
-   export const tools = [new CalculatorTool(), new MyCustomTool()];
-   ```
-
-### Changing the LLM
-
-You can switch between different LLM providers by modifying `backend/src/agent/graph.ts`:
+### Soroswap Integration
 
 ```typescript
-// For OpenAI
-const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
-  temperature: 0,
+// Get liquidity pool data
+const pools = await soroswapAPI.getPools();
+
+// Execute swap with best route
+const swap = await soroswapAPI.executeSwap({
+  from: 'XLM',
+  to: 'USDC',
+  amount: '1000',
+  slippage: 0.5
 });
+```
 
-// For Anthropic
-const llm = new ChatAnthropic({
-  modelName: "claude-3-sonnet-20240229",
-  temperature: 0,
+### DeFindex Integration
+
+```typescript
+// Get available strategies
+const strategies = await defindexAPI.getStrategies();
+
+// Deploy to vault
+const deployment = await defindexAPI.deployToVault({
+  strategy: 'stable_yield',
+  amount: '1000',
+  asset: 'XLM'
 });
 ```
-
-### Styling
-
-The frontend uses Tailwind CSS. You can customize the styling by modifying:
-- `frontend/tailwind.config.js` - Tailwind configuration
-- `frontend/src/index.css` - Global styles
-- Component files - Individual component styles
-
-## 📚 API Endpoints
-
-### POST `/api/chat`
-
-Send a message to the AI agent.
-
-**Request Body:**
-```json
-{
-  "message": "What is 15 * 23?",
-  "history": [
-    {
-      "id": "1",
-      "content": "Hello",
-      "role": "user",
-      "timestamp": "2024-01-01T00:00:00.000Z"
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "message": "The result is 345",
-  "toolCalls": [
-    {
-      "id": "call_123",
-      "name": "calculator",
-      "args": { "expression": "15 * 23" },
-      "result": "Result: 345"
-    }
-  ]
-}
-```
-
-### GET `/health`
-
-Health check endpoint.
-
-**Response:**
-```json
-{
-  "status": "OK",
-  "timestamp": "2024-01-01T00:00:00.000Z"
-}
-```
-
-## 🚀 Deployment
-
-### Backend Deployment
-
-1. **Build the project:**
-   ```bash
-   npm run build
-   ```
-
-2. **Start production server:**
-   ```bash
-   npm start
-   ```
-
-### Frontend Deployment
-
-1. **Build the project:**
-   ```bash
-   npm run build
-   ```
-
-2. **Serve the built files:**
-   ```bash
-   npm run preview
-   ```
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+We welcome contributions to Hunta! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Run tests
+npm test
+
+# Run linting
+npm run lint
+
+# Build for production
+npm run build
+```
+
+### Code Style
+
+- **TypeScript**: Strict type checking enabled
+- **ESLint**: Airbnb style guide
+- **Prettier**: Consistent code formatting
+- **Husky**: Pre-commit hooks for quality assurance
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-If you encounter any issues:
+- **Soroswap Team** for building an amazing DEX aggregator
+- **DeFindex Team** for innovative yield strategies
+- **Stellar Development Foundation** for the robust blockchain platform
+- **LangChain Team** for powerful AI agent tools
+- **OpenAI** for advanced language models
 
-1. Check the console for error messages
-2. Verify your API keys are correctly set
-3. Ensure both backend and frontend are running
-4. Check the network tab for API call errors
+## 📞 Support
 
-## 🔗 Resources
+- **Documentation**: [docs.hunta.finance](https://docs.hunta.finance)
+- **Discord**: [discord.gg/hunta](https://discord.gg/hunta)
+- **Twitter**: [@HuntaFinance](https://twitter.com/HuntaFinance)
+- **Email**: support@hunta.finance
 
-- [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
-- [LangChain Documentation](https://js.langchain.com/)
-- [React Documentation](https://react.dev/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/) 
+---
+
+**Built with ❤️ for the Stellar DeFi ecosystem**
+
+*Hunta - Hunt for opportunities, execute with precision* 
